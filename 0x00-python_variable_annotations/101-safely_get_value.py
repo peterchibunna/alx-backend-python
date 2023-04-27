@@ -5,11 +5,12 @@ Module #11
 import typing
 
 T = typing.TypeVar('T')
+Default = typing.Union[T, None]
 
 
 def safely_get_value(
         dct: typing.Mapping, key: typing.Any,
-        default: typing.Union[T, None] = None) -> typing.Union[T, None]:
+        default: Default = None) -> typing.Union[typing.Any, T]:
     """11. More involved type annotations
     :param dct:
     :param key:
