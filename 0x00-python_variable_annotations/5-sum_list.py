@@ -2,9 +2,10 @@
 """
 Module #5
 """
+import typing
 
 
-def sum_list(input_list: [float]) -> float:
+def sum_list(input_list: typing.List[float]) -> float:
     """
     returns the floating point sum of items in a list
     :param input_list:
