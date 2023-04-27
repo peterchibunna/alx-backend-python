@@ -2,15 +2,16 @@
 """
 Module #11
 """
-import typing
-
-T = typing.TypeVar('T')
-Default = typing.Union[T, None]
+from typing import Any, Mapping, Union, TypeVar
 
 
-def safely_get_value(
-        dct: typing.Mapping, key: typing.Any,
-        default: Default = None) -> typing.Union[typing.Any, T]:
+T = TypeVar('T')
+ReturnType = Union[Any, T]
+Default = Union[T, None]
+
+
+def safely_get_value(dct: Mapping, key: Any, default: Default = None)\
+        -> ReturnType:
     """11. More involved type annotations
     :param dct:
     :param key:
