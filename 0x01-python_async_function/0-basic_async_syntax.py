@@ -6,7 +6,7 @@ import random
 import asyncio
 
 
-def wait_random(max_delay: int = 10) -> float:
+async def wait_random(max_delay: int = 10) -> float:
     """
     Wait for a random value between 0 and `max_delay`
     :param max_delay:
