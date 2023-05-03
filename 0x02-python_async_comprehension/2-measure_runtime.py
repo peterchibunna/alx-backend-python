@@ -23,6 +23,5 @@ async def measure_runtime():
     :return: the total execution time measured for all the co-routines
     """
     start = time.time()
-    tasks_generator = (async_comprehension() for i in range(4))
-    await asyncio.gather(*tasks_generator)
+    await asyncio.gather(*(async_comprehension() for i in range(4)))
     return time.time() - start
