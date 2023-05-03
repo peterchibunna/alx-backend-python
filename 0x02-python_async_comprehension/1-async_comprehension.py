@@ -17,5 +17,4 @@ async def async_comprehension() -> typing.List[float]:
     over `async_generator`, then return the 10 random numbers.
     :return:
     """
-    numbers = async_generator()
-    return [i async for i in numbers]
+    return [i async for i in async_generator()]
