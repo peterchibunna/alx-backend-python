@@ -19,6 +19,5 @@ class TestAccessNestedMap(unittest.TestCase):
     ])
     def test_access_nested_map(self, nested_map: Dict, path: Tuple[str],
                                expected: Union[Dict, int]) -> None:
-        """Implement the named method
-        """
+        """Implement the named method"""
         self.assertEqual(access_nested_map(nested_map, path), expected)
