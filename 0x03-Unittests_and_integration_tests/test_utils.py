@@ -5,7 +5,8 @@
 import unittest
 from parameterized import parameterized
 from typing import Dict, Tuple, Union
-from utils import access_nested_map
+from utils import access_nested_map, get_json
+import unittest.mock as mock
 
 
 class TestAccessNestedMap(unittest.TestCase):
@@ -26,7 +27,24 @@ class TestAccessNestedMap(unittest.TestCase):
         ({"a": 1}, ("a", "b"), KeyError),
     ])
     def test_access_nested_map_exception(self, nested_map, path, expected):
-        """Implement this test
+        """Implement this test: 1. Parameterize a unit test
         """
         with self.assertRaises(expected_exception=expected):
             access_nested_map(nested_map, path)
+
+
+class TestGetJson(unittest.TestCase):
+    """Test get_json class
+    """
+
+    @parameterized.expand([
+        ("http://example.com", {"payload": True}),
+        ("http://holberton.io", {"payload": False}),
+    ])
+    def test_get_json(self, url, expected):
+        """2. Mock HTTP calls
+        """
+        with mock.patch('requests.get', data=mock.Mock(
+                **{'json.return_value': expected})) as get:
+            self.assertEqual(get_json(url), expected)
+            get.assert_called_once(url)
