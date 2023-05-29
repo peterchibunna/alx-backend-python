@@ -8,6 +8,7 @@ from typing import Dict, Tuple, Union
 from client import access_nested_map, get_json, memoize
 from client import GithubOrgClient
 from unittest import mock
+from unittest.mock import patch
 
 
 class TestGithubOrgClient(unittest.TestCase):
@@ -165,11 +166,13 @@ class TestGithubOrgClient(unittest.TestCase):
         mocked_fxn.assert_called_once_with(
             "https://api.github.com/orgs/{}".format(org))
 
-    def test_public_repos_url(self) -> None:
-        """Tests the `_public_repos_url` property of the class"""
-        with mock.patch("client.GithubOrgClient.org",
-                        new_callable=mock.PropertyMock) as mock_org:
-            mock_org.return_value = {
-                'repos_url': "mock-data"}
-            self.assertEqual(
-                GithubOrgClient("google")._public_repos_url, "mock-data")
+    @parameterized.expand([
+        ('random_url', {'repos_url': 'http://peterchibunna.tech'})
+    ])
+    def test_public_repos_url(self, name, result):
+        """self descriptive
+        """
+        with patch('client.GithubOrgClient.org',
+                   mock.PropertyMock(return_value=result)):
+            response = GithubOrgClient(name)._public_repos_url
+            self.assertEqual(response, result.get('repos_url'))
