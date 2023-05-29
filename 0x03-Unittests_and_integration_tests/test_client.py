@@ -21,7 +21,7 @@ class TestGithubOrgClient(unittest.TestCase):
     """Main test case class
     """
 
-    @mock.patch('client.get_json')
+    @patch('client.get_json')
     def test_public_repos(self, mock_get_json: mock.MagicMock) -> None:
         """test the test_public_repos method"""
         test_data = {
