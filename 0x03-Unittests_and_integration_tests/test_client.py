@@ -11,7 +11,9 @@ from unittest import mock
 from unittest.mock import patch
 
 
-def bar():
+def foo():
+    """There is nothing that this one is doing, just to allow us to `patch`
+    in peace"""
     return "bar"
 
 
@@ -170,7 +172,7 @@ class TestGithubOrgClient(unittest.TestCase):
         mocked_fxn.assert_called_once_with(
             "https://api.github.com/orgs/{}".format(org))
 
-    @mock.patch('test_client.bar', mock.MagicMock(
+    @patch('test_client.foo', mock.MagicMock(
         return_value='http://peterchibunna.tech'))
     def test_public_repos_url(self):
         """6. More patching
