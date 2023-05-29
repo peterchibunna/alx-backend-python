@@ -170,15 +170,17 @@ class TestGithubOrgClient(unittest.TestCase):
         mocked_fxn.assert_called_once_with(
             "https://api.github.com/orgs/{}".format(org))
 
-    @parameterized.expand([
-        ('random_url', {'repos_url': 'http://peterchibunna.tech'})
-    ])
     @mock.patch('test_client.bar', mock.MagicMock(
         return_value='http://peterchibunna.tech'))
-    def test_public_repos_url(self, name, result):
+    def test_public_repos_url(self):
         """6. More patching
         """
-        with patch('client.GithubOrgClient.org',
-                   mock.PropertyMock(return_value=result)):
-            response = GithubOrgClient(name)._public_repos_url
-            self.assertEqual(response, result.get('repos_url'))
+        with patch("client.GithubOrgClient.org",
+                   new_callable=mock.PropertyMock) as mock_org:
+            mock_org.return_value = {
+                'repos_url': "http://peterchibunna.tech",
+            }
+            self.assertEqual(
+                GithubOrgClient("google")._public_repos_url,
+                "http://peterchibunna.tech",
+            )
