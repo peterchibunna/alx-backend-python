@@ -3,12 +3,13 @@
 TestGithubOrgClient
 """
 import unittest
-from parameterized import parameterized
+from parameterized import parameterized, parameterized_class
 from typing import Dict, Tuple, Union
 from client import access_nested_map, get_json, memoize
 from client import GithubOrgClient
 from unittest import mock
 from unittest.mock import patch
+from fixtures import TEST_PAYLOAD
 
 
 def foo():
@@ -195,3 +196,30 @@ class TestGithubOrgClient(unittest.TestCase):
         """Test the client's `has_license` property"""
         result = GithubOrgClient.has_license(repo, key)
         self.assertEqual(result, expectation)
+
+
+@parameterized_class(
+    ['org_payload', 'repos_payload', 'expected_repos', 'apache2_repos'],
+    TEST_PAYLOAD)
+class TestIntegrationGithubOrgClient(unittest.TestCase):
+    """Integration test for fixtures: main class
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        cls.get_patcher = patch('requests.get', side_effect=[
+            cls.org_payload, cls.repos_payload
+        ])
+        cls.mocked_get = cls.get_patcher.start()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.get_patcher.stop()
+
+    def test_public_repos(self):
+        """test public repos
+        """
+
+    def test_public_repos_with_license(self):
+        """test public with license
+        """
