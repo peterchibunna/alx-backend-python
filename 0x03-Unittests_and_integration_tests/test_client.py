@@ -11,6 +11,10 @@ from unittest import mock
 from unittest.mock import patch
 
 
+def bar():
+    return "bar"
+
+
 class TestGithubOrgClient(unittest.TestCase):
     """Main test case class
     """
@@ -169,8 +173,10 @@ class TestGithubOrgClient(unittest.TestCase):
     @parameterized.expand([
         ('random_url', {'repos_url': 'http://peterchibunna.tech'})
     ])
+    @mock.patch('test_client.bar', mock.MagicMock(
+        return_value='http://peterchibunna.tech'))
     def test_public_repos_url(self, name, result):
-        """self descriptive
+        """6. More patching
         """
         with patch('client.GithubOrgClient.org',
                    mock.PropertyMock(return_value=result)):
