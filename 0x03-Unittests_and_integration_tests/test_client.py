@@ -14,17 +14,17 @@ class TestGithubOrgClient(unittest.TestCase):
     """Main test case class
     """
 
-    @mock.patch('clients.get_json')
-    def test_public_repos(self):
-        """test"""
-        # with mock.patch
-        pass
+    # @mock.patch('client.get_json')
+    # def test_public_repos(self):
+    #     """test"""
+    #     # with mock.patch
+    #     pass
 
     @parameterized.expand([
         ("google", {'login': "google"}),
         ("abc", {'login': "abc"}),
     ])
-    @mock.patch('clients.get_json')
+    @mock.patch('client.get_json')
     def test_org(self, org: str, resp: Dict, mocked_fxn: mock.MagicMock) \
             -> None:
         """Tests the `org` method."""
